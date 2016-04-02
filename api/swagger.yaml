@@ -1,0 +1,205 @@
+---
+swagger: "2.0"
+info:
+  description: ""
+  version: "1.0"
+  title: ""
+  termsOfService: ""
+# host: ""
+basePath: "/"
+tags:
+- name: "feed"
+- name: "queryterms"
+- name: "search"
+schemes:
+- "http"
+paths:
+  /feed/add:
+    post:
+      tags:
+      - "feed"
+      summary: "add a Feed to be parsed by wheretolive"
+      description: ""
+      operationId: "addFeed"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: " feed to add"
+        required: true
+        schema:
+          $ref: "#/definitions/AddFeed"
+      responses:
+        200:
+          description: "Return a message"
+          schema:
+            type: "string"
+        500:
+          description: "Internal server error"
+      x-swagger-router-controller: "Feed"
+  /feed/del:
+    post:
+      tags:
+      - "feed"
+      summary: "delete a Feed from wheretolive"
+      description: ""
+      operationId: "delFeed"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: " feed to delete"
+        required: true
+        schema:
+          $ref: "#/definitions/DelFeed"
+      responses:
+        200:
+          description: "Return a message"
+          schema:
+            type: "string"
+        500:
+          description: "Internal server error"
+      x-swagger-router-controller: "Feed"
+  /feed/list:
+    get:
+      tags:
+      - "feed"
+      summary: "return the list of the current feeds parsed by wheretolive"
+      description: ""
+      operationId: "listFeeds"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "Return Feeds List"
+          schema:
+            type: "number"
+        500:
+          description: "Internal server error"
+      x-swagger-router-controller: "Feed"
+  /queryterms/add:
+    post:
+      tags:
+      - "queryterms"
+      summary: "add new terms in the query terms list used by WhereToLive to extract\
+        \ news"
+      description: ""
+      operationId: "addQueryTerms"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: " terms to add"
+        required: true
+        schema:
+          $ref: "#/definitions/AddTerms"
+      responses:
+        200:
+          description: "Return a message"
+          schema:
+            type: "string"
+        500:
+          description: "Internal server error"
+      x-swagger-router-controller: "Queryterms"
+  /queryterms/del:
+    post:
+      tags:
+      - "queryterms"
+      summary: "delete existing terms in the query terms list used by WhereToLive\
+        \ to extract news"
+      description: ""
+      operationId: "delQueryTerms"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "terms to delete"
+        required: true
+        schema:
+          $ref: "#/definitions/DelTerms"
+      responses:
+        200:
+          description: "Return a message"
+          schema:
+            type: "string"
+        500:
+          description: "Internal server error"
+      x-swagger-router-controller: "Queryterms"
+  /queryterms/list:
+    get:
+      tags:
+      - "queryterms"
+      summary: "return the query terms list used by WhereToLive to extract news"
+      description: ""
+      operationId: "listQueryTerms"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "Return Terms List"
+          schema:
+            type: "number"
+        500:
+          description: "Internal server error"
+      x-swagger-router-controller: "Queryterms"
+  /search:
+    post:
+      tags:
+      - "search"
+      summary: "search endpoint"
+      description: ""
+      operationId: "search"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Search"
+      responses:
+        200:
+          description: "Return a message"
+          schema:
+            type: "string"
+        500:
+          description: "Internal server error"
+      x-swagger-router-controller: "Search"
+definitions:
+  DelTerms:
+    type: "object"
+    properties:
+      terms:
+        type: "array"
+        items:
+          type: "string"
+  DelFeed:
+    type: "object"
+    properties:
+      url:
+        type: "string"
+  AddFeed:
+    type: "object"
+    properties:
+      url:
+        type: "string"
+      publisher:
+        type: "string"
+  AddTerms:
+    type: "object"
+    properties:
+      terms:
+        type: "array"
+        items:
+          type: "string"
+  Search:
+    type: "object"
+    properties:
+      request:
+        type: "object"
