@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 
 var client = new elasticsearch.Client({
   // host: '192.168.99.100:9200',
-  host: 'es-data-2:9200,es-data-4:9200,es-data-3:9200,es-data-1:9200,
+  host: ['es-data-2:9200','es-data-4:9200','es-data-3:9200','es-data-1:9200'],
   log: 'trace'
 });
 
