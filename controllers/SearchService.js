@@ -10,6 +10,7 @@ var client = new elasticsearch.Client({
 });
 
 exports.search = (args, res, next) => {
+  res.setHeader('Access-Control-Allow-Headers', 'authorization, content-type');
   let query = args.body.value.request;
   console.log(query);
 

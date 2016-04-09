@@ -22,6 +22,19 @@ var swaggerDoc = jsyaml.safeLoad(spec);
 // Initialize the Swagger middleware
 swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
 
+  app.use(function(req, res){
+    // Set CORS headers
+    	res.setHeader('Access-Control-Allow-Origin', '*');
+    	res.setHeader('Access-Control-Request-Method', '*');
+    	res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
+    	res.setHeader('Access-Control-Allow-Headers', '*');
+    	if ( req.method === 'OPTIONS' ) {
+    		res.writeHead(200);
+    		res.end();
+    		return;
+    	};
+  });
+
   // Interpret Swagger resources and attach metadata to request - must be first in swagger-tools middleware chain
   app.use(middleware.swaggerMetadata());
 
@@ -33,14 +46,6 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
 
   // Serve the Swagger documents and Swagger UI
   app.use(middleware.swaggerUi());
-
-  //cors
-  app.use(function middleware(req, res, next) {
-    res.header('Access-Control-Allow-Origin', 'example.com');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-  });
 
   // Start the server
   http.createServer(app).listen(serverPort, function () {
