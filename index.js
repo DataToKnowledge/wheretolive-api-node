@@ -22,7 +22,7 @@ var swaggerDoc = jsyaml.safeLoad(spec);
 // Initialize the Swagger middleware
 swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
 
-  app.use(function(req, res){
+  app.use(function(req, res, next){
     // Set CORS headers
     	res.setHeader('Access-Control-Allow-Origin', '*');
     	res.setHeader('Access-Control-Request-Method', '*');
@@ -33,6 +33,7 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
     		res.end();
     		return;
     	};
+      next();
   });
 
   // Interpret Swagger resources and attach metadata to request - must be first in swagger-tools middleware chain
